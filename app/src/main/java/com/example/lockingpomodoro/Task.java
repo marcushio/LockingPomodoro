@@ -1,9 +1,17 @@
 package com.example.lockingpomodoro;
 
 import android.view.View;
-@Entity
+
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "task_table")
 public class Task {
     @PrimaryKey
+    @NonNull
+    @ColumnInfo(name = "name")
     public String name;
 
     private int weight;
@@ -30,6 +38,11 @@ public class Task {
     public int getWeight(){ return weight; }
     public int getInterval(){ return interval; }
     public int getTally(){ return tally; }
+
+    public void incrementTally(){ tally++; }
+    public void setTally(int tally){ this.tally = tally; }
+    public void setWeight(int newWeight){ this.weight = newWeight; }
+    public void setInterval(int newInterval){ this.interval = newInterval; }
 
 
 }
