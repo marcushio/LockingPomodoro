@@ -13,9 +13,11 @@ public class Task {
     @NonNull
     @ColumnInfo(name = "name")
     public String name;
-
+    @ColumnInfo(name = "weight")
     private int weight;
+    @ColumnInfo(name = "interval")
     private int interval;
+    @ColumnInfo(name = "tally")
     private int tally;
 
     public Task(String name, int weight, int interval){
@@ -25,14 +27,8 @@ public class Task {
         tally = 0;
     }
 
-    public Task(View view){//is a view what I need to get the information about making a task?
-
-    }
-
     @Override
-    public String toString(){
-        return (name + "\n" + weight);
-    }
+    public String toString(){ return (name + " " + weight + " Count: " + tally); }
 
     public String getName(){ return name; }
     public int getWeight(){ return weight; }

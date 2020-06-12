@@ -73,14 +73,15 @@
         android:id="@+id/enter_interval"
         android:layout_width="204dp"
         android:layout_height="67dp"
-        android:layout_marginTop="328dp"
-        android:layout_marginEnd="72dp"
+        android:layout_marginEnd="68dp"
         android:ems="10"
         android:inputType="number"
         android:text="@string/enter_interval"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!--android:onClick="onScheduleClick"-->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
@@ -91,7 +92,6 @@
         android:layout_marginBottom="50dp"
         android:clickable="true"
         android:foreground="@android:drawable/ic_input_add"
-        android:onClick="onScheduleClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

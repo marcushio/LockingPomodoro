@@ -11,16 +11,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class TaskListAdaptor extends RecyclerView.Adapter<TaskListAdaptor.TaskViewHolder> {
-
+    //lets make an inner class to hold our view
     class TaskViewHolder extends RecyclerView.ViewHolder {
-        private final TextView taskItemView;
+        private TextView taskItemView; //this used to be final might have to change back
 
         private TaskViewHolder(View itemView) {
             super(itemView);
             taskItemView = itemView.findViewById(R.id.textView);
         }
     }
-
+    //rest of the members
     private final LayoutInflater inflater;
     private List<Task> taskList;
 
@@ -36,7 +36,7 @@ public class TaskListAdaptor extends RecyclerView.Adapter<TaskListAdaptor.TaskVi
     public void onBindViewHolder(TaskViewHolder holder, int position){
         if(taskList != null){
             Task currTask = taskList.get(position);
-            holder.taskItemView.setText(currTask.getName());
+            holder.taskItemView.setText(currTask.toString());
         } else{
             holder.taskItemView.setText("NO TASKS");
         }

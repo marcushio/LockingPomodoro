@@ -16,9 +16,12 @@ public class ScheduleRepository {
         allTasks = taskDao.getTasks();
     }
 
-    LiveData<List<Task>> getAllTasks(){ return allTasks; }
+    LiveData<List<Task>> getAllTasks(){
+        return allTasks; }
 
     void insert(Task task){
         TaskRoomDatabase.databaseWriteExecutor.execute( ()->{taskDao.insert(task);} );
     }
+
+    //add delete method later
 }

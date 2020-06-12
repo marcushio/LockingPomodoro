@@ -11,39 +11,76 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    ListView taskList;
-    List<Task> tasks = new ArrayList<>();
-    //private ArrayAdapter<Task> tasks;
+    private ScheduleModel scheduleModel;
+    public static final int NEW_TASK_ACTIVITY_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Toolbar toolbar = findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
+        RecyclerView recyclerView = findViewById(R.id.recyclerview);
+        final TaskListAdaptor adaptor = new TaskListAdaptor(this);
+        recyclerView.setAdapter(adaptor);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        scheduleModel = new ViewModelProvider(this).get(ScheduleModel.class);
+        scheduleModel.getAllTasks().observe(this, new Observer<List<Task>>() {
+            @Override
+            public void onChanged(List<Task> tasks) {
+                adaptor.setTasks(tasks);
+            }
+        });
+
+        scheduleModel.getAllTasks().observe(this, new Observer<List<Task>>() {
+            @Override
+            public void onChanged(@Nullable final List<Task> tasks) {
+                adaptor.setTasks(tasks);
+            }
+        });
 
         FloatingActionButton fab = findViewById(R.id.addtaskButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "make a task", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                addTask(view);
+                //Snackbar.make(view, "make a task", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                //addTask(view);
+                Intent intent = new Intent(MainActivity.this, ScheduleActivity.class);
+                startActivityForResult(intent, NEW_TASK_ACTIVITY_REQUEST_CODE);
             }
         });
+    }
 
-        taskList = (ListView) findViewById(R.id.task_list_view);
-        tasks.add(new Task("install bidet", 1, 45));
-        tasks.add(new Task("beat it", 2, 45));
-        ArrayAdapter<Task> arrayAdapter = new ArrayAdapter<Task>(this, R.layout.task_list_view, R.id.textView, tasks);
-        taskList.setAdapter(arrayAdapter);
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == NEW_TASK_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
+            //Bundle taskInfo = data.getExtras(); this is one option, but I think i prefer the following
+            //pull the pieces of info from the bundle and make a task to add to db
+            String taskName = data.getStringExtra("TASK_NAME");
+            int taskWeight = data.getIntExtra("TASK_WEIGHT", 0);
+            int taskInterval = data.getIntExtra("TASK_INTERVAL", 0);
+            Task task = new Task(taskName, taskWeight, taskInterval);
+            //in the db you go little one
+            scheduleModel.insert(task);
+        } else {
+            Toast.makeText(
+                    getApplicationContext(),
+                    "empty task, not saved", //need to add this to strings.xml
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -66,10 +103,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void addTask(View view){//I think that's actually really all I need
-        Intent intent = new Intent(this, ScheduleActivity.class);
-        startActivity(intent);
     }
 }
