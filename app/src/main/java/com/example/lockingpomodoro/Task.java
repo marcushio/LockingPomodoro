@@ -28,7 +28,7 @@ public class Task {
     }
 
     @Override
-    public String toString(){ return (name + " " + weight + " Count: " + tally); }
+    public String toString(){ return ("Task: " + name + "\n" + "Weight: " + weight + "\n" + " Count: " + tally); }
 
     public String getName(){ return name; }
     public int getWeight(){ return weight; }

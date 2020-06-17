@@ -18,7 +18,9 @@
     <string name="interval_label">Interval: </string>
     <string name="task_hint">enter task here</string>
     <string name="task_text">enter task</string>
-    <string name="enter_weight">enter weight</string>
     <string name="enter_interval">enter interval</string>
+    <string name="enter_weight">enter weight</string>
+
+    <string name="focus_task">Task_Name</string>
 
 </resources>
