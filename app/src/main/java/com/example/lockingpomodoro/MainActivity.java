@@ -43,12 +43,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        scheduleModel.getAllTasks().observe(this, new Observer<List<Task>>() {
-            @Override
-            public void onChanged(@Nullable final List<Task> tasks) {
-                adaptor.setTasks(tasks);
-            }
-        });
 
         FloatingActionButton fab = findViewById(R.id.addtaskButton);
         fab.setOnClickListener(new View.OnClickListener() {

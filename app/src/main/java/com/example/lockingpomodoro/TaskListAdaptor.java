@@ -1,6 +1,7 @@
 package com.example.lockingpomodoro;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,51 +13,37 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class TaskListAdaptor extends RecyclerView.Adapter<TaskListAdaptor.TaskViewHolder> {
+    private Context context;
+
     //lets make an inner class to hold our view
-    class TaskViewHolder extends RecyclerView.ViewHolder {
+    class TaskViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView taskItemView; //this used to be final might have to change back
         private ImageView imageView;
 
-        private TaskViewHolder(View itemView) {
+        public TaskViewHolder(View itemView) {
             super(itemView);
             taskItemView = itemView.findViewById(R.id.textView);
             imageView = itemView.findViewById(R.id.imageView); //as of now this is empty for a value
+            itemView.setOnClickListener(this);
         }
 
-        void bind(final Task task){
-            if(selectedPosition == -1){
-                imageView.setVisibility(View.GONE);
-            } else {
-                if(selectedPosition == getAdapterPosition()){
-                    imageView.setVisibility(View.VISIBLE);
-                } else {
-                    imageView.setVisibility(View.GONE);
-                }
-            }
-            taskItemView.setText(task.getName());
-
-            // Handle item click and set the selection
-            taskItemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Redraw the old selection and the new
-                    taskItemView.setVisibility(View.VISIBLE);
-                    if(selectedPosition != getAdapterPosition()) {
-                        notifyItemChanged(selectedPosition);
-                        //selectedItem = getLayoutPosition();
-                        selectedPosition = getAdapterPosition();
-                    }
-                }
-            });
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(context, FocusActivity.class); //I'm going to have to add more to this later to include all necessary info
+            context.startActivity(intent);
         }
     }
+
 
     //rest of the members
     private final LayoutInflater inflater;
     private List<Task> taskList;
     private int selectedPosition = -1; //-1 for nothing selected
 
-    public TaskListAdaptor(Context context){ inflater = LayoutInflater.from(context); }
+    public TaskListAdaptor(Context context){
+        inflater = LayoutInflater.from(context);
+        this.context = context;
+    }
 
 
     @Override
@@ -94,5 +81,7 @@ public class TaskListAdaptor extends RecyclerView.Adapter<TaskListAdaptor.TaskVi
         }
         return null;
     }
+
+    public void setContext(Context context){ this.context = context; }
 
 }
