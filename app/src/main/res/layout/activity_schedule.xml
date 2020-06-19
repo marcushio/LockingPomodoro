@@ -8,59 +8,71 @@
 
     <TextView
         android:id="@+id/weightLabel"
-        android:layout_width="83dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="76dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="70dp"
         android:layout_marginTop="95dp"
         android:layout_marginBottom="34dp"
         android:text="@string/weight_label"
         app:layout_constraintBottom_toTopOf="@+id/interval_label"
         app:layout_constraintEnd_toStartOf="@+id/enterWeight"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.051"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/taskLabel" />
 
+    <!--android:onClick="onScheduleClick"-->
+
     <TextView
         android:id="@+id/taskLabel"
-        android:layout_width="78dp"
-        android:layout_height="31dp"
-        android:layout_marginStart="91dp"
-        android:layout_marginTop="136dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginBottom="20dp"
         android:text="@string/task_label"
+        app:layout_constraintBottom_toTopOf="@+id/weightLabel"
         app:layout_constraintEnd_toStartOf="@+id/enterTask"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/enterTask"
-        android:layout_width="170dp"
-        android:layout_height="81dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="72dp"
+        android:layout_marginBottom="65dp"
         android:ems="10"
         android:hint="@string/task_hint"
         android:inputType="text"
-        app:layout_constraintBaseline_toBaselineOf="@+id/taskLabel"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/enterWeight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/taskLabel"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.786" />
 
     <EditText
         android:id="@+id/enterWeight"
-        android:layout_width="182dp"
-        android:layout_height="74dp"
-        android:layout_marginEnd="72dp"
-        android:hint="@string/enter_weight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="70dp"
         android:ems="10"
+        android:hint="@string/enter_weight"
         android:inputType="number"
         app:layout_constraintBaseline_toBaselineOf="@+id/weightLabel"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/weightLabel" />
 
     <TextView
         android:id="@+id/interval_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="74dp"
+        android:layout_marginStart="70dp"
         android:layout_marginTop="52dp"
-        android:layout_marginBottom="366dp"
+        android:layout_marginBottom="200dp"
         android:text="@string/interval_label"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/enter_interval"
@@ -68,18 +80,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/weightLabel" />
 
-    <!--android:onClick="onScheduleClick"-->
     <EditText
         android:id="@+id/enter_interval"
-        android:layout_width="204dp"
-        android:layout_height="67dp"
-        android:layout_marginEnd="68dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginEnd="56dp"
         android:ems="10"
-        android:inputType="number"
         android:hint="@string/enter_interval"
+        android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/interval_label"
+        app:layout_constraintTop_toBottomOf="@+id/enterWeight"
+        app:layout_constraintVertical_bias="0.293" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"

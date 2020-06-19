@@ -25,6 +25,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private ScheduleModel scheduleModel;
+    private RecyclerView.LayoutManager layoutManager;
     public static final int NEW_TASK_ACTIVITY_REQUEST_CODE = 1;
 
     @Override
@@ -32,6 +33,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
+        //all entries are the same size
+        recyclerView.setHasFixedSize(true);
+        //use linear layout manager
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
         final TaskListAdaptor adaptor = new TaskListAdaptor(this);
         recyclerView.setAdapter(adaptor);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

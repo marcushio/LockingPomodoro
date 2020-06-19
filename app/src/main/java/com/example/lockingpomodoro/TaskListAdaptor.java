@@ -13,12 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class TaskListAdaptor extends RecyclerView.Adapter<TaskListAdaptor.TaskViewHolder> {
-    private Context context;
-
+    private Context context; //this is the context of the main Activity
+    private final LayoutInflater inflater;
+    private List<Task> taskList;
+    private int selectedPosition = -1; //-1 for nothing selected
     //lets make an inner class to hold our view
     class TaskViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView taskItemView; //this used to be final might have to change back
         private ImageView imageView;
+        //layout params
+
 
         public TaskViewHolder(View itemView) {
             super(itemView);
@@ -30,15 +34,19 @@ public class TaskListAdaptor extends RecyclerView.Adapter<TaskListAdaptor.TaskVi
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(context, FocusActivity.class); //I'm going to have to add more to this later to include all necessary info
+            selectedPosition = getLayoutPosition();
+            Task selectedTask = taskList.get(selectedPosition);
+            String taskName = selectedTask.getName();
+            int taskCount = selectedTask.getTally();
+            int taskInterval = selectedTask.getInterval();
+            intent.putExtra("taskName", taskName);
+            intent.putExtra("taskCount", taskCount);
+            intent.putExtra("taskInterval", taskInterval);
             context.startActivity(intent);
+            selectedTask.incrementTally();
+            notifyDataSetChanged();
         }
     }
-
-
-    //rest of the members
-    private final LayoutInflater inflater;
-    private List<Task> taskList;
-    private int selectedPosition = -1; //-1 for nothing selected
 
     public TaskListAdaptor(Context context){
         inflater = LayoutInflater.from(context);
@@ -57,6 +65,9 @@ public class TaskListAdaptor extends RecyclerView.Adapter<TaskListAdaptor.TaskVi
         if(taskList != null){
             Task currTask = taskList.get(position);
             holder.taskItemView.setText(currTask.toString());
+            holder.taskItemView.setSelected(selectedPosition == position);
+            //setup layout params so our viewholders fit right
+            //holder.itemView.setLayoutParams();
         } else{
             holder.taskItemView.setText("NO TASKS");
         }
@@ -75,7 +86,7 @@ public class TaskListAdaptor extends RecyclerView.Adapter<TaskListAdaptor.TaskVi
         notifyDataSetChanged();
     }
 
-    public Task getSelected(){
+    public Task getSelected(){ //I only have single selection so I don't think I needed this.
         if (selectedPosition != -1){
             return taskList.get(selectedPosition);
         }
