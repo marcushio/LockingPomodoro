@@ -40,8 +40,8 @@ public class FocusActivity extends AppCompatActivity {
             @Override
             public void onFinish(){
                 pomodoroCount++;
-                String finish = "Congrats, Pomodoro complete! \n New Task Count: " + pomodoroCount;
-                timerText.setText("finished"); //this needs to update tally and return to main activity
+                String finish = "Pomodoro complete! \n New Task Count: " + pomodoroCount;
+                timerText.setText("Congrats! Finished"); //this needs to update tally and return to main activity
                 positiveMessageText.setText(finish);
             }
         }.start();
