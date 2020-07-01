@@ -83,12 +83,8 @@ public class MainActivity extends AppCompatActivity {
             Task task = new Task(taskName, taskWeight, taskInterval, taskTally);
             //in the db you go little one
             scheduleModel.insert(task);
-        } /*else {
-            Toast.makeText(
-                    getApplicationContext(),
-                    "empty task, not saved", //need to add this to strings.xml
-                    Toast.LENGTH_LONG).show();
-        }*/
+        }
+
 
         if(requestCode == TASK_FINISH_REQUEST_CODE && resultCode == RESULT_OK ){
             int taskTally = data.getIntExtra("TASK_TALLY", 0);
