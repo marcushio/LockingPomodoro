@@ -92,9 +92,10 @@ public class MainActivity extends AppCompatActivity {
 
         if(requestCode == TASK_FINISH_REQUEST_CODE && resultCode == RESULT_OK ){
             int taskTally = data.getIntExtra("TASK_TALLY", 0);
-            Task justFinished = adaptor.getSelected();
-            //justFinished.incrementTally();
-            justFinished.setTally(taskTally);
+            String taskName = data.getStringExtra("TASK_NAME");
+            //Task justFinished = adaptor.getSelected();
+            //justFinished.setTally(taskTally);
+            scheduleModel.updateTally(taskName, taskTally);
             adaptor.notifyDataSetChanged();
         }
     }

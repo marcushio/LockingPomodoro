@@ -25,8 +25,9 @@ public class FocusActivity extends AppCompatActivity {
     private TextView nameTextView;
     private Button addPomoButton;
     private Button dismissPomoButton;
-
     private MediaPlayer player;
+
+    private String taskName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,7 @@ public class FocusActivity extends AppCompatActivity {
                 startFinishSound();
                 Intent addCountIntent = new Intent();
                 addCountIntent.putExtra("TASK_TALLY", ++pomodoroCount);
+                addCountIntent.putExtra("TASK_NAME", taskName);
                 setResult(RESULT_OK, addCountIntent);
                 finish();
             }

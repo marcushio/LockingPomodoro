@@ -23,4 +23,7 @@ public interface TaskDao {
     @Query("SELECT * from task_table ORDER BY name ASC")
     LiveData<List<Task>> getTasks();
 
+    @Query("UPDATE task_table SET tally = :tally WHERE name = :name")
+    void setTally(String name, int tally);
+
 }

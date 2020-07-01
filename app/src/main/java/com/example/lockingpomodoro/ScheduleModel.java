@@ -21,6 +21,6 @@ public class ScheduleModel extends AndroidViewModel {
 
     public void insert(Task task) { repository.insert(task); }
 
-
+    public void updateTally(String name, int tally) { repository.setTally(name, tally);}
 
 }

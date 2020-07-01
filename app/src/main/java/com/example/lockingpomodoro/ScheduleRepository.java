@@ -23,5 +23,9 @@ public class ScheduleRepository {
         TaskRoomDatabase.databaseWriteExecutor.execute( ()->{taskDao.insert(task);} );
     }
 
+    void setTally(String name, int tally){
+        TaskRoomDatabase.databaseWriteExecutor.execute( ()->{taskDao.setTally(name, tally);});
+    }
+
     //add delete method later
 }
