@@ -20,11 +20,11 @@ public class Task {
     @ColumnInfo(name = "tally")
     private int tally;
 
-    public Task(String name, int weight, int interval){
+    public Task(String name, int weight, int interval, int tally){
         this.name = name;
         this.weight = weight;
         this.interval = interval;
-        tally = 0;
+        this.tally = tally;
     }
 
     @Override

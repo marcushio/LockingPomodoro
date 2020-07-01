@@ -35,7 +35,7 @@ public class ScheduleActivity extends AppCompatActivity {
                 int taskInterval = Integer.parseInt( enterIntervalField.getText().toString() );
                 if( infoIsComplete(enterTaskField, enterWeightField, enterIntervalField) ){
                     //this task needs to get passed back so I can put it in the db
-                    Task newTask = new Task(taskName, taskWeight, taskInterval);
+                    Task newTask = new Task(taskName, taskWeight, taskInterval, 0);
                     //I think we need to put it in a bundle to pass it, i think putExtra accomplishes this
                     Bundle taskBundle = new Bundle();
                     taskBundle.putString("TASK_NAME", taskName); //maybe don't hard code keys later idk what's best practice

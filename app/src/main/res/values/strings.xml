@@ -22,5 +22,7 @@
     <string name="enter_weight">enter weight</string>
 
     <string name="focus_task">Task_Name</string>
+    <string name="count_task">Add</string>
+    <string name="dismiss_task">Dismiss</string>
 
 </resources>

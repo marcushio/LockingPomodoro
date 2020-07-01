@@ -1,5 +1,6 @@
 package com.example.lockingpomodoro;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -17,6 +18,8 @@ public class TaskListAdaptor extends RecyclerView.Adapter<TaskListAdaptor.TaskVi
     private final LayoutInflater inflater;
     private List<Task> taskList;
     private int selectedPosition = -1; //-1 for nothing selected
+    public static final int TASK_FINISH_CODE = 2;
+
     //lets make an inner class to hold our view
     class TaskViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView taskItemView; //this used to be final might have to change back
@@ -42,11 +45,11 @@ public class TaskListAdaptor extends RecyclerView.Adapter<TaskListAdaptor.TaskVi
             intent.putExtra("taskName", taskName);
             intent.putExtra("taskCount", taskCount);
             intent.putExtra("taskInterval", taskInterval);
-            context.startActivity(intent);
-            selectedTask.incrementTally();
+            ((Activity) context).startActivityForResult(intent, TASK_FINISH_CODE );
             notifyDataSetChanged();
         }
     }
+
 
     public TaskListAdaptor(Context context){
         inflater = LayoutInflater.from(context);
@@ -57,6 +60,7 @@ public class TaskListAdaptor extends RecyclerView.Adapter<TaskListAdaptor.TaskVi
     @Override
     public  TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         View itemView = inflater.inflate(R.layout.task_list_view, parent, false);
+        context = parent.getContext();
         return new TaskViewHolder(itemView);
     }
 

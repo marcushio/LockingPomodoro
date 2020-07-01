@@ -30,11 +30,12 @@
         app:layout_constraintTop_toBottomOf="@+id/focus_taskname"
         app:layout_constraintVertical_bias="0.302" />
 
+
     <EditText
         android:id="@+id/positive_message"
         android:layout_width="279dp"
         android:layout_height="76dp"
-        android:layout_marginTop="128dp"
+        android:layout_marginTop="15dp"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
@@ -42,6 +43,34 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timer"
-        app:layout_constraintVertical_bias="0.214" />
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/count_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="76dp"
+        android:layout_marginBottom="206dp"
+        android:text="@string/count_task"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/dismiss_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/positive_message" />
+
+    <Button
+        android:id="@+id/dismiss_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="76dp"
+        android:layout_marginEnd="76dp"
+        android:text="@string/dismiss_task"
+        android:visibility="invisible"
+        app:layout_constraintBaseline_toBaselineOf="@+id/count_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/count_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

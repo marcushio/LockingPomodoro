@@ -26,7 +26,10 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private ScheduleModel scheduleModel;
     private RecyclerView.LayoutManager layoutManager;
+    private TaskListAdaptor adaptor;
+    //public final TaskListAdaptor adaptor = new TaskListAdaptor(this);
     public static final int NEW_TASK_ACTIVITY_REQUEST_CODE = 1;
+    public static final int TASK_FINISH_REQUEST_CODE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        final TaskListAdaptor adaptor = new TaskListAdaptor(this);
+        //final TaskListAdaptor adaptor = new TaskListAdaptor(this);
+        adaptor = new TaskListAdaptor(this);
         recyclerView.setAdapter(adaptor);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         scheduleModel = new ViewModelProvider(this).get(ScheduleModel.class);
@@ -65,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
+        //I don't like it... but I think I have to have to pieces of code one for handling new task, one for handling finishing a focus
+        //I think I can probably get around this... using ActivityResultCallerInterface
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == NEW_TASK_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
@@ -73,14 +79,23 @@ public class MainActivity extends AppCompatActivity {
             String taskName = data.getStringExtra("TASK_NAME");
             int taskWeight = data.getIntExtra("TASK_WEIGHT", 0);
             int taskInterval = data.getIntExtra("TASK_INTERVAL", 0);
-            Task task = new Task(taskName, taskWeight, taskInterval);
+            int taskTally = data.getIntExtra("TASK_TALLY", 0);
+            Task task = new Task(taskName, taskWeight, taskInterval, taskTally);
             //in the db you go little one
             scheduleModel.insert(task);
-        } else {
+        } /*else {
             Toast.makeText(
                     getApplicationContext(),
                     "empty task, not saved", //need to add this to strings.xml
                     Toast.LENGTH_LONG).show();
+        }*/
+
+        if(requestCode == TASK_FINISH_REQUEST_CODE && resultCode == RESULT_OK ){
+            int taskTally = data.getIntExtra("TASK_TALLY", 0);
+            Task justFinished = adaptor.getSelected();
+            //justFinished.incrementTally();
+            justFinished.setTally(taskTally);
+            adaptor.notifyDataSetChanged();
         }
     }
 
