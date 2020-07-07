@@ -103,6 +103,14 @@ public class FocusActivity extends AppCompatActivity {
         }.start();
     }
 
+    @Override
+    public void onBackPressed(){
+        timer.cancel();
+        player.stop();
+        player.release();
+        finish();
+    }
+
     private void startDieSound(){
         if(player != null){
             player.stop();
