@@ -25,4 +25,8 @@
     <string name="count_task">Add</string>
     <string name="dismiss_task">Dismiss</string>
 
+    <string name="dialog_delete_task">Delete Task?</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+
 </resources>

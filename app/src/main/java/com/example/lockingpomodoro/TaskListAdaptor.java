@@ -6,22 +6,30 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 public class TaskListAdaptor extends RecyclerView.Adapter<TaskListAdaptor.TaskViewHolder> {
-    private Context context; //this is the context of the main Activity
+    public Context context; //this is the context of the main Activity
     private final LayoutInflater inflater;
     private List<Task> taskList;
     private int selectedPosition = -1; //-1 for nothing selected
     public static final int TASK_FINISH_CODE = 2;
+    private DialogFragment fragment; //I don't know if I'm using a fragment here.... this might now be what I need
+
 
     //lets make an inner class to hold our view
-    class TaskViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class TaskViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         private TextView taskItemView; //this used to be final might have to change back
         private ImageView imageView;
         //layout params
@@ -32,6 +40,7 @@ public class TaskListAdaptor extends RecyclerView.Adapter<TaskListAdaptor.TaskVi
             taskItemView = itemView.findViewById(R.id.textView);
             imageView = itemView.findViewById(R.id.imageView); //as of now this is empty for a value
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         @Override
@@ -45,8 +54,17 @@ public class TaskListAdaptor extends RecyclerView.Adapter<TaskListAdaptor.TaskVi
             intent.putExtra("taskName", taskName);
             intent.putExtra("taskCount", taskCount);
             intent.putExtra("taskInterval", taskInterval);
-            ((Activity) context).startActivityForResult(intent, TASK_FINISH_CODE );
+            ((AppCompatActivity) context).startActivityForResult(intent, TASK_FINISH_CODE );
             notifyDataSetChanged();
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            selectedPosition = getLayoutPosition();
+            fragment = new SelectedTaskFragment();
+            FragmentManager fm = ((AppCompatActivity) context).getSupportFragmentManager();
+            fragment.show(fm, "delete");
+            return false;
         }
     }
 
@@ -70,6 +88,7 @@ public class TaskListAdaptor extends RecyclerView.Adapter<TaskListAdaptor.TaskVi
             Task currTask = taskList.get(position);
             holder.taskItemView.setText(currTask.toString());
             holder.taskItemView.setSelected(selectedPosition == position);
+            //holder.v.set
             //setup layout params so our viewholders fit right
             //holder.itemView.setLayoutParams();
         } else{

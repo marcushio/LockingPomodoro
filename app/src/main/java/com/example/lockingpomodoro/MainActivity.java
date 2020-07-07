@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SelectedTaskFragment.DeleteDialogListener {
     private ScheduleModel scheduleModel;
     private RecyclerView.LayoutManager layoutManager;
     private TaskListAdaptor adaptor;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<Task> tasks) {
                 adaptor.setTasks(tasks);
+
             }
         });
 
@@ -109,12 +111,22 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog){
+        String taskname = adaptor.getSelected().getName();
+        scheduleModel.deleteEntry( taskname );
+        adaptor.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog){
+        //I don't think I have to actually do anything.
     }
 }
