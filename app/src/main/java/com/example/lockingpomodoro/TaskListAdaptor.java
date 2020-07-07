@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -48,14 +49,19 @@ public class TaskListAdaptor extends RecyclerView.Adapter<TaskListAdaptor.TaskVi
             Intent intent = new Intent(context, FocusActivity.class); //I'm going to have to add more to this later to include all necessary info
             selectedPosition = getLayoutPosition();
             Task selectedTask = taskList.get(selectedPosition);
-            String taskName = selectedTask.getName();
-            int taskCount = selectedTask.getTally();
-            int taskInterval = selectedTask.getInterval();
-            intent.putExtra("taskName", taskName);
-            intent.putExtra("taskCount", taskCount);
-            intent.putExtra("taskInterval", taskInterval);
-            ((AppCompatActivity) context).startActivityForResult(intent, TASK_FINISH_CODE );
-            notifyDataSetChanged();
+            if(selectedTask.getTally() == selectedTask.getWeight()){
+                Toast toast = Toast.makeText(context, R.string.locked_task, Toast.LENGTH_SHORT);
+                toast.show(); 
+            } else {
+                String taskName = selectedTask.getName();
+                int taskCount = selectedTask.getTally();
+                int taskInterval = selectedTask.getInterval();
+                intent.putExtra("taskName", taskName);
+                intent.putExtra("taskCount", taskCount);
+                intent.putExtra("taskInterval", taskInterval);
+                ((AppCompatActivity) context).startActivityForResult(intent, TASK_FINISH_CODE);
+                notifyDataSetChanged();
+            }
         }
 
         @Override

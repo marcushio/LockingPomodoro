@@ -7,8 +7,6 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="hello_pomodoro">Hello Pomodoro</string>
     <string name="edit_message">Enter a Message</string>
     <string name="button_send">Send iiit!</string>>
@@ -20,6 +18,7 @@
     <string name="task_text">enter task</string>
     <string name="enter_interval">enter interval</string>
     <string name="enter_weight">enter weight</string>
+    <string name="locked_task">You reached the weight for this task, choose another.</string>
 
     <string name="focus_task">Task_Name</string>
     <string name="count_task">Add</string>
