@@ -3,18 +3,13 @@ package com.example.lockingpomodoro;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import java.io.IOException;
 
 public class FocusActivity extends AppCompatActivity {
     private int pomodoroCount;
@@ -25,7 +20,9 @@ public class FocusActivity extends AppCompatActivity {
     private TextView nameTextView;
     private Button addPomoButton;
     private Button dismissPomoButton;
+    private Button abandonButton;
     private MediaPlayer player;
+    private CountDownTimer timer;
 
     private String taskName;
 
@@ -41,7 +38,7 @@ public class FocusActivity extends AppCompatActivity {
         pomodoroCount = (int)extras.get("taskCount"); //I should unite these later
         nameTextView = findViewById(R.id.focus_taskname);
 
-        millisInFuture = (counter * 1000); //x1k b/c this is in millis
+        millisInFuture = (counter * 1000); //*1k b/c this is in millis
         nameTextView.setText(taskName);
 
 
@@ -76,7 +73,18 @@ public class FocusActivity extends AppCompatActivity {
             }
         });
 
-        new CountDownTimer(millisInFuture, countDownInterval){
+        abandonButton = findViewById(R.id.abandon_button);
+        abandonButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timer.cancel();
+                Intent dismissIntent = new Intent();
+                setResult(RESULT_OK, dismissIntent);
+                finish();
+            }
+        });
+
+        timer = new CountDownTimer(millisInFuture, countDownInterval){
             @Override
             public  void onTick(long millisUntilFinished){
                 timerText.setText(String.valueOf(counter));
@@ -88,6 +96,7 @@ public class FocusActivity extends AppCompatActivity {
                 String finish = "Pomodoro complete! \n Current Task Count: " + pomodoroCount;
                 timerText.setText("Congrats! Finished"); //this needs to update tally and return to main activity
                 positiveMessageText.setText(finish);
+                abandonButton.setVisibility(View.INVISIBLE);
                 addPomoButton.setVisibility(View.VISIBLE);
                 dismissPomoButton.setVisibility(View.VISIBLE);
             }

@@ -24,6 +24,7 @@
     <string name="focus_task">Task_Name</string>
     <string name="count_task">Add</string>
     <string name="dismiss_task">Dismiss</string>
+    <string name="abandon">Abandon Task</string>
 
     <string name="dialog_delete_task">Delete Task?</string>
     <string name="delete">Delete</string>
