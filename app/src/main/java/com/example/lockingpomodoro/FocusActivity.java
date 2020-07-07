@@ -11,11 +11,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class FocusActivity extends AppCompatActivity {
     private int pomodoroCount;
     private int counter = 0;
     private long millisInFuture = 5000; //default value, it gets changed in the body
-    private long countDownInterval = 1000;
+    private long countDownInterval = 1000; //1000 = 1 second
+
 
     private TextView nameTextView;
     private Button addPomoButton;
@@ -37,8 +41,8 @@ public class FocusActivity extends AppCompatActivity {
         counter = (int)extras.get("taskInterval");
         pomodoroCount = (int)extras.get("taskCount"); //I should unite these later
         nameTextView = findViewById(R.id.focus_taskname);
-
-        millisInFuture = (counter * 1000); //*1k b/c this is in millis
+        //this comes as minutes
+        millisInFuture = (counter * 60000); //*60k b/c 60 turns to mins to secs and 1k turns secs to millis
         nameTextView.setText(taskName);
 
 
@@ -87,7 +91,8 @@ public class FocusActivity extends AppCompatActivity {
         timer = new CountDownTimer(millisInFuture, countDownInterval){
             @Override
             public  void onTick(long millisUntilFinished){
-                timerText.setText(String.valueOf(counter));
+                //timerText.setText(String.valueOf(counter)); old straightforward seconds disp
+                timerText.setText(new SimpleDateFormat("mm:ss").format(new Date( millisUntilFinished)));
                --counter;
             }
             @Override

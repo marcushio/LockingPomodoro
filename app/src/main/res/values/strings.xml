@@ -16,7 +16,7 @@
     <string name="interval_label">Interval: </string>
     <string name="task_hint">enter task here</string>
     <string name="task_text">enter task</string>
-    <string name="enter_interval">enter interval</string>
+    <string name="enter_interval">enter interval (min)</string>
     <string name="enter_weight">enter weight</string>
     <string name="locked_task">You reached the weight for this task, choose another.</string>
 
