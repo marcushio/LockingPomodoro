@@ -25,4 +25,8 @@ public class ScheduleModel extends AndroidViewModel {
 
     public void deleteEntry(String name){ repository.deleteEntry(name); }
 
+    public List<Task> getTaskList(){
+        return repository.getAllTasks().getValue();
+    }
+
 }

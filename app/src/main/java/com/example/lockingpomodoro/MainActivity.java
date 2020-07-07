@@ -89,12 +89,26 @@ public class MainActivity extends AppCompatActivity implements SelectedTaskFragm
 
 
         if(requestCode == TASK_FINISH_REQUEST_CODE && resultCode == RESULT_OK ){
+            //smart way to do this would be to hold a data structure with full tasks so we don't have
+            //to check the whole list every time, but I don't expect a massive list of tasks so we'll do the checkall way
             int taskTally = data.getIntExtra("TASK_TALLY", 0);
             String taskName = data.getStringExtra("TASK_NAME");
             //Task justFinished = adaptor.getSelected();
             //justFinished.setTally(taskTally);
             scheduleModel.updateTally(taskName, taskTally);
             adaptor.notifyDataSetChanged();
+            /*
+            if( allTasksComplete() ) {
+
+            } else{
+                String taskName = data.getStringExtra("TASK_NAME");
+                //Task justFinished = adaptor.getSelected();
+                //justFinished.setTally(taskTally);
+                scheduleModel.updateTally(taskName, taskTally);
+                adaptor.notifyDataSetChanged();
+            }
+
+             */
         }
     }
 
@@ -129,4 +143,15 @@ public class MainActivity extends AppCompatActivity implements SelectedTaskFragm
     public void onDialogNegativeClick(DialogFragment dialog){
         //I don't think I have to actually do anything.
     }
+    /*
+    private boolean allTasksComplete(){
+
+        for(Task task : scheduleModel.getTaskList()){
+
+        }
+
+        return false;
+    }
+
+     */
 }

@@ -47,7 +47,8 @@ public class FocusActivity extends AppCompatActivity {
 
 
         final TextView timerText = findViewById(R.id.timer);
-        EditText positiveMessageText = findViewById(R.id.positive_message);
+        TextView positiveMessageText = findViewById(R.id.positive_message);
+        positiveMessageText.setVisibility(View.INVISIBLE);
         player = MediaPlayer.create(this, R.raw.invincibility);
 
         addPomoButton = findViewById(R.id.count_button);
@@ -97,6 +98,7 @@ public class FocusActivity extends AppCompatActivity {
             }
             @Override
             public void onFinish(){
+                timerText.setText(new SimpleDateFormat("mm:ss").format(new Date( 0)));
                 player.start();
                 String finish = "Pomodoro complete! \n Current Task Count: " + pomodoroCount;
                 timerText.setText("Congrats! Finished"); //this needs to update tally and return to main activity
