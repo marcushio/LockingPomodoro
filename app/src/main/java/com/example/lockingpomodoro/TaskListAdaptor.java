@@ -94,9 +94,6 @@ public class TaskListAdaptor extends RecyclerView.Adapter<TaskListAdaptor.TaskVi
             Task currTask = taskList.get(position);
             holder.taskItemView.setText(currTask.toString());
             holder.taskItemView.setSelected(selectedPosition == position);
-            //holder.v.set
-            //setup layout params so our viewholders fit right
-            //holder.itemView.setLayoutParams();
         } else{
             holder.taskItemView.setText("NO TASKS");
         }

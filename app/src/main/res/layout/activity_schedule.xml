@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".ScheduleActivity">
 
+    <!--android:onClick="onScheduleClick"-->
+
     <TextView
         android:id="@+id/weightLabel"
         android:layout_width="wrap_content"
@@ -20,30 +22,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/taskLabel" />
 
-    <!--android:onClick="onScheduleClick"-->
-
     <TextView
         android:id="@+id/taskLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
         android:text="@string/task_label"
         app:layout_constraintBottom_toTopOf="@+id/weightLabel"
         app:layout_constraintEnd_toStartOf="@+id/enterTask"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.100000024" />
 
     <EditText
         android:id="@+id/enterTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="22dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="72dp"
-        android:layout_marginBottom="65dp"
         android:ems="10"
         android:hint="@string/task_hint"
         android:inputType="text"
@@ -51,27 +51,29 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/taskLabel"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.786" />
+        app:layout_constraintVertical_bias="0.16000003" />
 
     <EditText
         android:id="@+id/enterWeight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="70dp"
         android:ems="10"
         android:hint="@string/enter_weight"
         android:inputType="number"
-        app:layout_constraintBaseline_toBaselineOf="@+id/weightLabel"
+        app:layout_constraintBottom_toTopOf="@+id/enter_interval"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/weightLabel" />
+        app:layout_constraintStart_toEndOf="@+id/weightLabel"
+        app:layout_constraintTop_toBottomOf="@+id/enterTask" />
 
     <TextView
         android:id="@+id/interval_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="40dp"
         android:layout_marginBottom="200dp"
         android:text="@string/interval_label"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -84,8 +86,10 @@
         android:id="@+id/enter_interval"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="22dp"
-        android:layout_marginEnd="56dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="70dp"
+        android:layout_marginBottom="200dp"
         android:ems="10"
         android:hint="@string/enter_interval"
         android:inputType="number"

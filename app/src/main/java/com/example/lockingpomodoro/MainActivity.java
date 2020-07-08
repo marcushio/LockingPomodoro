@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements SelectedTaskFragm
     //public final TaskListAdaptor adaptor = new TaskListAdaptor(this);
     public static final int NEW_TASK_ACTIVITY_REQUEST_CODE = 1;
     public static final int TASK_FINISH_REQUEST_CODE = 2;
+    private boolean allTasksComplete = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,9 @@ public class MainActivity extends AppCompatActivity implements SelectedTaskFragm
             @Override
             public void onChanged(List<Task> tasks) {
                 adaptor.setTasks(tasks);
-
+                //I can probably set a boolean here for tasks complete because this seems to be where
+                //the change is actually in effect.
+                if (allTasksComplete(tasks)){ resetTaskCounts(); }
             }
         });
 
@@ -93,22 +96,10 @@ public class MainActivity extends AppCompatActivity implements SelectedTaskFragm
             //to check the whole list every time, but I don't expect a massive list of tasks so we'll do the checkall way
             int taskTally = data.getIntExtra("TASK_TALLY", 0);
             String taskName = data.getStringExtra("TASK_NAME");
-            //Task justFinished = adaptor.getSelected();
-            //justFinished.setTally(taskTally);
             scheduleModel.updateTally(taskName, taskTally);
+            adaptor.setTasks(scheduleModel.getTaskList()); //prob don't need this
             adaptor.notifyDataSetChanged();
-            /*
-            if( allTasksComplete() ) {
 
-            } else{
-                String taskName = data.getStringExtra("TASK_NAME");
-                //Task justFinished = adaptor.getSelected();
-                //justFinished.setTally(taskTally);
-                scheduleModel.updateTally(taskName, taskTally);
-                adaptor.notifyDataSetChanged();
-            }
-
-             */
         }
     }
 
@@ -143,15 +134,25 @@ public class MainActivity extends AppCompatActivity implements SelectedTaskFragm
     public void onDialogNegativeClick(DialogFragment dialog){
         //I don't think I have to actually do anything.
     }
-    /*
-    private boolean allTasksComplete(){
 
-        for(Task task : scheduleModel.getTaskList()){
-
+    private boolean allTasksComplete(List<Task> tasks){
+        //for whatever reason I can't get the state to update by this point so I'm going to have to
+        //shortcut it a little bit. Idk if it's because the activity needs to complete before reflecting
+        //the change or what but I have a working solution...
+        for(Task task : tasks){ //scheduleModel.getTaskList()
+            if(task.getTally() != task.getWeight())
+                return false;
         }
-
-        return false;
+        return true;
     }
 
-     */
+    private void resetTaskCounts(){
+        for(Task task : scheduleModel.getTaskList()){
+            task.setTally(0);
+        }
+        adaptor.notifyDataSetChanged();
+        //probably add a Toast and a way to tell that a set was complete here 
+    }
+
+
 }
