@@ -30,4 +30,8 @@ public class ScheduleRepository {
     void deleteEntry(String name){
         TaskRoomDatabase.databaseWriteExecutor.execute( ()->{taskDao.deleteEntry(name);});
     }
+
+    void resetCounts(){
+        TaskRoomDatabase.databaseWriteExecutor.execute( ()->{taskDao.resetCounts();});
+    }
 }

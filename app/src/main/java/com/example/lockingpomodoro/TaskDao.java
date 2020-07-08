@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -25,5 +26,8 @@ public interface TaskDao {
 
     @Query("UPDATE task_table SET tally = :tally WHERE name = :name")
     void setTally(String name, int tally);
+
+    @Query("UPDATE task_table SET tally = 0")
+    void resetCounts();
 
 }

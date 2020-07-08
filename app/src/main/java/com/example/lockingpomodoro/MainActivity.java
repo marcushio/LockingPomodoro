@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity implements SelectedTaskFragm
     //public final TaskListAdaptor adaptor = new TaskListAdaptor(this);
     public static final int NEW_TASK_ACTIVITY_REQUEST_CODE = 1;
     public static final int TASK_FINISH_REQUEST_CODE = 2;
-    private boolean allTasksComplete = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,11 +146,9 @@ public class MainActivity extends AppCompatActivity implements SelectedTaskFragm
     }
 
     private void resetTaskCounts(){
-        for(Task task : scheduleModel.getTaskList()){
-            task.setTally(0);
-        }
+        scheduleModel.resetTasks();
         adaptor.notifyDataSetChanged();
-        //probably add a Toast and a way to tell that a set was complete here 
+        //probably add a Toast and a way to tell that a set was complete here
     }
 
 
