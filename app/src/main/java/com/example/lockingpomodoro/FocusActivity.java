@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -100,8 +103,8 @@ public class FocusActivity extends AppCompatActivity {
             public void onFinish(){
                 timerText.setText(new SimpleDateFormat("mm:ss").format(new Date( 0)));
                 player.start();
+                vibratePhone();
                 String finish = "Pomodoro complete! \n Current Task Count: " + pomodoroCount;
-                timerText.setText("Congrats! Finished"); //this needs to update tally and return to main activity
                 positiveMessageText.setText(finish);
                 abandonButton.setVisibility(View.INVISIBLE);
                 addPomoButton.setVisibility(View.VISIBLE);
@@ -136,6 +139,24 @@ public class FocusActivity extends AppCompatActivity {
         }
         player = MediaPlayer.create(this, R.raw.act_passed);
         player.start();
+    }
+
+    private void vibratePhone(){
+        /* this is apparently old shit I'm using the one below for newer than sdk 26
+        Vibrator v = (Vibrator) getSystemService(this.VIBRATOR_SERVICE);
+        // Vibrate for 500 milliseconds
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            v.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            //deprecated in API 26
+            v.vibrate(500);
+        }
+         */
+        if (Build.VERSION.SDK_INT >= 26) {
+            ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(VibrationEffect.createOneShot(1000, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(1000);
+        }
     }
 
 
