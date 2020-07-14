@@ -29,6 +29,7 @@
         android:layout_marginEnd="100dp"
         android:layout_marginBottom="32dp"
         android:foreground="@android:drawable/ic_input_add"
+        app:backgroundTint="@android:color/background_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/basic_plus_icon" />

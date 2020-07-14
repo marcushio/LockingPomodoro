@@ -69,4 +69,7 @@ dependencies {
 
 // Testing
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
+
+    //Gif use?
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.17'
 }

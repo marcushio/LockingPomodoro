@@ -28,8 +28,10 @@ public class FocusActivity extends AppCompatActivity {
     private Button addPomoButton;
     private Button dismissPomoButton;
     private Button abandonButton;
+
     private MediaPlayer player;
     private CountDownTimer timer;
+    private Vibrator vibe;
 
     private String taskName;
 
@@ -64,6 +66,7 @@ public class FocusActivity extends AppCompatActivity {
                 addCountIntent.putExtra("TASK_TALLY", ++pomodoroCount);
                 addCountIntent.putExtra("TASK_NAME", taskName);
                 setResult(RESULT_OK, addCountIntent);
+                endVibrate();
                 finish();
             }
         });
@@ -77,6 +80,7 @@ public class FocusActivity extends AppCompatActivity {
                 Intent dismissIntent = new Intent();
                 dismissIntent.putExtra("TASK_TALLY", pomodoroCount);
                 setResult(RESULT_OK, dismissIntent);
+                endVibrate();
                 finish();
             }
         });
@@ -151,12 +155,17 @@ public class FocusActivity extends AppCompatActivity {
             //deprecated in API 26
             v.vibrate(500);
         }
-         */
+         */ //I wonder which piece of code is getting used for me?
+        vibe = ((Vibrator) getSystemService(VIBRATOR_SERVICE));
         if (Build.VERSION.SDK_INT >= 26) {
-            ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(VibrationEffect.createOneShot(1000, VibrationEffect.DEFAULT_AMPLITUDE));
+            vibe.vibrate(VibrationEffect.createOneShot(10000000, VibrationEffect.DEFAULT_AMPLITUDE));
         } else {
-            ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(1000);
+            vibe.vibrate(10000000);
         }
+    }
+
+    private void endVibrate(){
+        vibe.cancel();
     }
 
 

@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -29,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements SelectedTaskFragm
     private RecyclerView.LayoutManager layoutManager;
     private TaskListAdaptor adaptor;
     //public final TaskListAdaptor adaptor = new TaskListAdaptor(this);
+    TextView setCounter;
+    private int setCount;
     public static final int NEW_TASK_ACTIVITY_REQUEST_CODE = 1;
     public static final int TASK_FINISH_REQUEST_CODE = 2;
 
@@ -52,12 +55,9 @@ public class MainActivity extends AppCompatActivity implements SelectedTaskFragm
             @Override
             public void onChanged(List<Task> tasks) {
                 adaptor.setTasks(tasks);
-                //I can probably set a boolean here for tasks complete because this seems to be where
-                //the change is actually in effect.
                 if (allTasksComplete(tasks)){ resetTaskCounts(); }
             }
         });
-
 
         FloatingActionButton fab = findViewById(R.id.addtaskButton);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -69,12 +69,12 @@ public class MainActivity extends AppCompatActivity implements SelectedTaskFragm
                 startActivityForResult(intent, NEW_TASK_ACTIVITY_REQUEST_CODE);
             }
         });
+
+        setCounter = findViewById(R.id.set_count);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
-        //I don't like it... but I think I have to have to pieces of code one for handling new task, one for handling finishing a focus
-        //I think I can probably get around this... using ActivityResultCallerInterface
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == NEW_TASK_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity implements SelectedTaskFragm
             scheduleModel.insert(task);
         }
 
-
         if(requestCode == TASK_FINISH_REQUEST_CODE && resultCode == RESULT_OK ){
             //smart way to do this would be to hold a data structure with full tasks so we don't have
             //to check the whole list every time, but I don't expect a massive list of tasks so we'll do the checkall way
@@ -99,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements SelectedTaskFragm
             adaptor.setTasks(scheduleModel.getTaskList()); //prob don't need this
             adaptor.notifyDataSetChanged();
 
+            startActivity(new Intent(MainActivity.this, BreakActivity.class));
         }
     }
 
@@ -135,10 +135,7 @@ public class MainActivity extends AppCompatActivity implements SelectedTaskFragm
     }
 
     private boolean allTasksComplete(List<Task> tasks){
-        //for whatever reason I can't get the state to update by this point so I'm going to have to
-        //shortcut it a little bit. Idk if it's because the activity needs to complete before reflecting
-        //the change or what but I have a working solution...
-        for(Task task : tasks){ //scheduleModel.getTaskList()
+        for(Task task : tasks){
             if(task.getTally() != task.getWeight())
                 return false;
         }
@@ -148,8 +145,8 @@ public class MainActivity extends AppCompatActivity implements SelectedTaskFragm
     private void resetTaskCounts(){
         scheduleModel.resetTasks();
         adaptor.notifyDataSetChanged();
+        Toast toast = Toast.makeText(getApplicationContext(), "You finished a set! gj broh", Toast.LENGTH_SHORT);
         //probably add a Toast and a way to tell that a set was complete here
     }
-
 
 }

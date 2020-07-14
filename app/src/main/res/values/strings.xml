@@ -29,4 +29,7 @@
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
 
+    <string name="end_break">End Break</string>
+    <string name="break_title">Enjoy a well deserved break!</string>
+
 </resources>
