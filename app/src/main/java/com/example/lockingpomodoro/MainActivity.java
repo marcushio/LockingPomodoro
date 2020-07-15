@@ -25,6 +25,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.transform.Result;
+
 public class MainActivity extends AppCompatActivity implements SelectedTaskFragment.DeleteDialogListener {
     private ScheduleModel scheduleModel;
     private RecyclerView.LayoutManager layoutManager;
@@ -97,9 +99,9 @@ public class MainActivity extends AppCompatActivity implements SelectedTaskFragm
             scheduleModel.updateTally(taskName, taskTally);
             adaptor.setTasks(scheduleModel.getTaskList()); //prob don't need this
             adaptor.notifyDataSetChanged();
-
             startActivity(new Intent(MainActivity.this, BreakActivity.class));
-        }
+        } 
+
     }
 
     @Override

@@ -2,7 +2,11 @@ package com.example.lockingpomodoro;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioAttributes;
+import android.media.AudioFocusRequest;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,6 +33,7 @@ public class FocusActivity extends AppCompatActivity {
     private Button dismissPomoButton;
     private Button abandonButton;
 
+    private AudioManager audioManager;
     private MediaPlayer player;
     private CountDownTimer timer;
     private Vibrator vibe;
@@ -49,11 +54,24 @@ public class FocusActivity extends AppCompatActivity {
         //this comes as minutes
         millisInFuture = (counter * 60000); //*60k b/c 60 turns to mins to secs and 1k turns secs to millis
         nameTextView.setText(taskName);
-
-
         final TextView timerText = findViewById(R.id.timer);
         TextView positiveMessageText = findViewById(R.id.positive_message);
         positiveMessageText.setVisibility(View.INVISIBLE);
+        /*begin all stuff for audio focus
+        audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_MEDIA)
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                .build();
+        AudioFocusRequest focusRequest = new AudioFocusRequest().Builder(AudioManager.AUDIOFOCUS_GAIN)
+                .setAudioAttributes(audioAttributes)
+                .setAcceptsDelayedFocusGain(true)
+                .setOnAudioFocusChangeListener(afChangeListener, handler)
+                .build();
+        final Object focusLock = new Object(); // this was on android but it confuses me
+        boolean playbackDelayed = false;
+        boolean playbackNowAuthorized = false;
+        */
         player = MediaPlayer.create(this, R.raw.invincibility);
 
         addPomoButton = findViewById(R.id.count_button);
@@ -79,7 +97,7 @@ public class FocusActivity extends AppCompatActivity {
                 startDieSound();
                 Intent dismissIntent = new Intent();
                 dismissIntent.putExtra("TASK_TALLY", pomodoroCount);
-                setResult(RESULT_OK, dismissIntent);
+                setResult(RESULT_CANCELED, dismissIntent);
                 endVibrate();
                 finish();
             }
@@ -106,6 +124,7 @@ public class FocusActivity extends AppCompatActivity {
             @Override
             public void onFinish(){
                 timerText.setText(new SimpleDateFormat("mm:ss").format(new Date( 0)));
+                //get the audio focus here I think I need a builder for that... requestAudioFocus()
                 player.start();
                 vibratePhone();
                 String finish = "Pomodoro complete! \n Current Task Count: " + pomodoroCount;

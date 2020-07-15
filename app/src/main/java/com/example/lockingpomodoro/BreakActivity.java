@@ -17,14 +17,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class BreakActivity extends AppCompatActivity {
-    private long millisInFuture = 480000;
+    private long millisInFuture = 480000; // in the future get this from settings
     private long countDownInterval = 1000;
     private int counter = 0;
     private CountDownTimer timer;
 
     private MediaPlayer player;
     private Vibrator vibe;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
